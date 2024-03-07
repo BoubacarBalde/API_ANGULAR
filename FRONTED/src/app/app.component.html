@@ -1,0 +1,93 @@
+
+    <div *ngIf="information" class="bg-green-400 mx-2 shadow-xl shadow-green-400 animate-pulse h-10 text-center text-xl text-white">
+        {{information}} 
+    </div>
+
+    <div class="container mx-auto px-4 my-10">
+      <div class="flex justify-center">
+          <div class="w-full lg:w-2/3">
+              <div class="bg-white shadow-md rounded-lg">
+                  <div  class="bg-green-300 px-4 py-3 rounded-t-lg text-center text-2xl text-white">Enregistrer un élève</div>
+                    
+                  <div class="px-4 py-3">
+                      <form [formGroup]="myForm" (ngSubmit)="enregistrer()" (ngSubmit)="editEtudiantss()">
+  
+                          <div class="mb-4">
+                              <input type="text" placeholder="Matricule" class="bg-gray-200 p-2 form-input mt-1 block w-full rounded-md border-gray-300" [value]="etudiantIdd?.matricule" formControlName="matricule">
+                          </div>
+  
+                          <div class="mb-4">
+                              <input type="text" placeholder="Nom" class="bg-gray-200 p-2 form-input mt-1 block w-full rounded-md border-gray-300" [value]="etudiantIdd?.nom" formControlName="nom">
+                          </div>
+  
+                          <div class="mb-4">
+                              <input type="text" placeholder="Prénom" class="bg-gray-200 p-2 form-input mt-1 block w-full rounded-md border-gray-300" [value]="etudiantIdd?.prenom" formControlName="prenom">
+                          </div>
+
+                          <div class="mb-4">
+                            <input type="date" class="bg-gray-200 p-2 form-input mt-1 block w-full rounded-md border-gray-300" [value]="etudiantIdd?.date_naissance | date: 'yyyy-MM-dd'" formControlName="date_naissance">
+                          </div>
+
+                          <div class="mb-4">
+                            <select name="" class="bg-gray-200 p-2 form-input mt-1 block w-full rounded-md border-gray-300" [value]="etudiantDeparteIdd?._id" formControlName="departement">
+                                  <option *ngFor="let  dep of departements " value="{{dep._id}}" selected>{{dep.nom}}</option>
+                            </select>
+                          </div>
+                          
+                          <div class="mb-4">
+                            <input type="text" placeholder="Contact parent" class="bg-gray-200 p-2 form-input mt-1 block w-full rounded-md border-gray-300" [value]="etudiantIdd?.contact_parent" formControlName="contact_parent">
+                          </div>
+
+                          <div class="mb-4">
+                              <button type="submit" *ngIf="!etudiantIdd" [disabled]="this.myForm.invalid" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enregistrer</button>
+                              <button type="submit" *ngIf="etudiantIdd" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Modifier</button>
+                          </div>
+
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+
+<div class="mx-20 rounded-xl  bg-gray-300 p-1">
+  <table class="min-w-full text-center bg-gray-50">  
+      <thead class="border-b bg-gray-300">
+          <tr>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">ID</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">MATRICULE</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">NOM</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">PRENOM</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">DATE NAISSANCE</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">DEPARTEMENTS</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">CONTACT PARENT</th>
+              <th class="text-md font-bold text-gray-900 px-6 py-6">ACTIONS</th>
+          </tr>           
+      </thead>
+      <tbody>
+            <tr class="border-b-2 border-gray-300" *ngFor="let etudiant of etudiants">
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant._id}}</td>
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant.matricule}}</td>
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant.nom}}</td>
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant.prenom}}</td>
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant.date_naissance | date: 'dd/MM/yyyy'}}</td>
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant.departement.nom}}</td>
+               <td class="text-sm font-medium text-gray-900 px-6 py-6">{{etudiant.contact_parent}}</td>
+               <td>
+                  <button (click)="showEtudiantss(etudiant._id)" class="p-2 shadow-lg shadow-green-300 bg-green-400  rounded-sm text-sm text-white">Modifier</button>
+                  <button (click)="deleteEtudiantss(etudiant._id)" class="p-2 shadow-lg shadow-red-300 bg-red-500  rounded-sm text-sm text-white">Supprimer</button>
+               </td>
+            </tr>
+            <tr *ngIf="!etudiants">
+               <td>
+                   Aucun élève
+               </td>
+             </tr>
+      </tbody>
+      </table>
+      <div class="my-3">
+              
+      </div>
+</div>
+
